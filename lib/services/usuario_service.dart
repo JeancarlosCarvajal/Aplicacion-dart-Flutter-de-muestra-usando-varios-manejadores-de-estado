@@ -10,7 +10,8 @@ class _UsuarioService {
   Usuario? _usuario;
 
   // creamos el stream controller para poder acceder a el en el StreamBuilder y redibujar el widget
-  StreamController<Usuario> _usuarioStreamController = new StreamController<Usuario>();
+  // habla con un solo widget a la vez, para que sea a todos debes agregarle broadcast() al final
+  final StreamController<Usuario> _usuarioStreamController = new StreamController<Usuario>.broadcast(); // tenia new
 
   Usuario? get usuario => this._usuario;
 
@@ -33,9 +34,15 @@ class _UsuarioService {
 
   // metodo que cambia le edad del usuario
   void cambiarEdad( int edad ) {
-    if(this._usuario != null) 
-    this._usuario!.edad = edad;
-    this._usuarioStreamController.add(_usuario!); 
+    if(this._usuario != null) {
+      this._usuario!.edad = edad;
+      this._usuarioStreamController.add(_usuario!); 
+    }
+  }
+
+  // ahora limpiamos el stream controller para que no halla fuga de memoria
+  dispose(){
+    this._usuarioStreamController.close();
   }
 
 
