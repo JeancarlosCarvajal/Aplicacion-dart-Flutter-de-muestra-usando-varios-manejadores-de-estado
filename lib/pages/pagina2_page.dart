@@ -1,6 +1,4 @@
-import 'package:flutter/material.dart';
-import 'package:manejadores_estado_app/models/usuario.dart';
-import 'package:manejadores_estado_app/services/usuario_service.dart';
+import 'package:flutter/material.dart'; 
 
 class Pagina2Page extends StatelessWidget {
    
@@ -19,16 +17,15 @@ class Pagina2Page extends StatelessWidget {
 
             MaterialButton(
               color: Colors.blue,
-              onPressed: (){
-                final nuevoUsuario = new Usuario(nombre: 'Jeancarlos', edad: 37);
-                usuarioService.cargarUsuario(nuevoUsuario);
+              onPressed: (){ 
+
               },
               child: const Text( 'Establecer Usuario', style: TextStyle(color: Colors.white) )
             ),
             MaterialButton(
               color: Colors.blue,
               onPressed: (){
-                usuarioService.cambiarEdad(25);
+                
               },
               child: const Text( 'Cambiar Edad', style: TextStyle(color: Colors.white) )
             ),MaterialButton(

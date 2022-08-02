@@ -1,6 +1,4 @@
-import 'package:flutter/material.dart';
-import 'package:manejadores_estado_app/models/usuario.dart';
-import 'package:manejadores_estado_app/services/usuario_service.dart';
+import 'package:flutter/material.dart'; 
 
 class Pagina1Page extends StatelessWidget {
    
@@ -12,18 +10,7 @@ class Pagina1Page extends StatelessWidget {
       appBar: AppBar(
         title: const Center(child: Text( 'Pagina 1' )),
       ),
-      body: StreamBuilder( // Short Cut de flutter:        StreamBldr
-        stream: usuarioService.usuarioStream, 
-        builder: (BuildContext context, AsyncSnapshot<Usuario> snapshot) {
-          // snapshot es el que almacena la informacion, por lo tanto si existe es que tenemos un usuario
-          // la informacion del streambuilder esta dentro de snapshot.data tambien es la misma que usuarioService.usuario
-          // ya que lo asigamos de esa forma cuando creamos el streambuilder en usuario_service.dart
-          // este streambuilder Redibuja el Widget
-          return snapshot.hasData
-              ? InformacionUsuario( usuario: snapshot.data! ) // en teoria aqui sii tenemos un usuario registrado, tambien es lo mismo que snapshot.data = usuarioService.usuario
-              : const Center( child: Text( 'No hay Informacion del Usuario' ) );
-        },
-      ),
+      body: InformacionUsuario(),
       floatingActionButton: FloatingActionButton(
         child: const Icon(Icons.keyboard_backspace_sharp),
         onPressed: () => Navigator.pushNamed(context, 'pagina2'),
@@ -33,17 +20,13 @@ class Pagina1Page extends StatelessWidget {
 }
 
 class InformacionUsuario extends StatelessWidget {
-  // recibimos el usuario rgistrado. Siempre va existir
-  final Usuario usuario;
+  
   const InformacionUsuario({
-    Key? key, 
-    required this.usuario,
+    Key? key,
   }) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
-
-    print("Profesiones: ${usuario.profesiones}");
+  Widget build(BuildContext context) { 
     
     return Container(
       height: double.infinity,
@@ -59,8 +42,8 @@ class InformacionUsuario extends StatelessWidget {
             // ignore: prefer_const_constructors
             Divider(),
       
-            ListTile( title: Text( 'Nombre: ${usuario.nombre}' ) ),
-            ListTile( title: Text( 'Edad: ${usuario.edad}' ) ),
+            ListTile( title: Text( 'Nombre: ' ) ),
+            ListTile( title: Text( 'Edad:  ' ) ),
       
             const Text( 'Profesiones', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold) ),
             const Divider(),
