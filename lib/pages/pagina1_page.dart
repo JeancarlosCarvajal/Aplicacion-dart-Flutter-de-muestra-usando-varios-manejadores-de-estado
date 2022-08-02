@@ -1,4 +1,8 @@
-import 'package:flutter/material.dart'; 
+import 'package:flutter/material.dart';
+import 'package:manejadores_estado_app/models/usuario.dart';
+import 'package:provider/provider.dart';
+
+import 'package:manejadores_estado_app/services/usuarios_service.dart';
 
 class Pagina1Page extends StatelessWidget {
    
@@ -6,11 +10,26 @@ class Pagina1Page extends StatelessWidget {
   
   @override
   Widget build(BuildContext context) {
+    // llamamos la instancia de provider
+    final usuarioService = Provider.of<UsuariosService>(context);
+
     return Scaffold(
       appBar: AppBar(
         title: const Center(child: Text( 'Pagina 1' )),
+        actions: [
+          IconButton(
+            icon: Icon(Icons.exit_to_app),
+            onPressed: (){
+              // remover usuario
+              usuarioService.removerUsuario();
+            }
+          )
+        ],
       ),
-      body: InformacionUsuario(),
+      body: usuarioService.existeUsuario 
+        ? InformacionUsuario(usuario: usuarioService.usuario!)
+        : const Center(child: Text( 'No hay Usuarios Seleccionados' )
+      ),
       floatingActionButton: FloatingActionButton(
         child: const Icon(Icons.keyboard_backspace_sharp),
         onPressed: () => Navigator.pushNamed(context, 'pagina2'),
@@ -20,14 +39,17 @@ class Pagina1Page extends StatelessWidget {
 }
 
 class InformacionUsuario extends StatelessWidget {
-  
+
+  final Usuario usuario;
   const InformacionUsuario({
-    Key? key,
+    Key? key, 
+    required this.usuario,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) { 
-    
+    final List<String>? profesiones = usuario.profesiones;
+
     return Container(
       height: double.infinity,
       width: double.infinity,
@@ -42,15 +64,28 @@ class InformacionUsuario extends StatelessWidget {
             // ignore: prefer_const_constructors
             Divider(),
       
-            ListTile( title: Text( 'Nombre: ' ) ),
-            ListTile( title: Text( 'Edad:  ' ) ),
+            ListTile( title: Text( 'Nombre: ${usuario.nombre}' ) ),
+            ListTile( title: Text( 'Edad:  ${usuario.edad}' ) ),
       
             const Text( 'Profesiones', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold) ),
             const Divider(),
-      
-            ListTile( title: Text( 'Profesion 1: ' ) ),
-            ListTile( title: Text( 'Profesion 1: ' ) ),
-            ListTile( title: Text( 'Profesion 1: ' ) ),
+
+            // esta es una forma
+            if(profesiones != null) 
+              ...profesiones.map((profesion) => ListTile( title: Text( 'Profesion: $profesion' ) )).toList(),
+
+            // esta es otra forma
+            if(profesiones != null) 
+            ListView.builder(
+              scrollDirection: Axis.vertical, 
+              shrinkWrap: true,
+              itemCount: profesiones.length,
+              itemBuilder: (BuildContext context, int index) {
+                return ListTile( 
+                  title: Text( 'Profesion: ${profesiones[index]}' ) 
+                );
+              },
+            ), 
 
           ],
         ),
