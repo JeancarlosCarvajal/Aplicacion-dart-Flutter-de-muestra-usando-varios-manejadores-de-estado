@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'package:manejadores_estado_app/bloc/user/user_bloc.dart'; 
+import 'package:manejadores_estado_app/bloc/user/user_bloc.dart';
+import 'package:manejadores_estado_app/models/usuario.dart'; 
 
 class Pagina1Page extends StatelessWidget {
    
@@ -18,7 +19,7 @@ class Pagina1Page extends StatelessWidget {
         // buildWhen: , // muy util
         builder: (context, state) {  
           return state.existUser
-          ? InformacionUsuario()
+          ? InformacionUsuario(user: state.user!)
           : const Center(child: Text( 'No hay usuario seleccionado' )); 
         },
       ), 
@@ -31,9 +32,11 @@ class Pagina1Page extends StatelessWidget {
 }
 
 class InformacionUsuario extends StatelessWidget {
+  final User user;
   
   const InformacionUsuario({
-    Key? key,
+    Key? key, 
+    required this.user,
   }) : super(key: key);
 
   @override
@@ -53,15 +56,24 @@ class InformacionUsuario extends StatelessWidget {
             // ignore: prefer_const_constructors
             Divider(),
       
-            ListTile( title: Text( 'Nombre: ' ) ),
-            ListTile( title: Text( 'Edad:  ' ) ),
+            ListTile( title: Text( 'Nombre: ${user.nombre}' ) ),
+            ListTile( title: Text( 'Edad:  ${user.edad}' ) ),
       
             const Text( 'Profesiones', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold) ),
             const Divider(),
+
+            if( user.profesiones != null)
+            ListView.builder(
+              shrinkWrap: true,
+              itemCount:  user.profesiones!.length,
+              itemBuilder: (_, int index) { 
+                return ListTile( title: Text( 'Profesion :  ${user.profesiones![index] }' ) );
+              }
+            )
       
-            ListTile( title: Text( 'Profesion 1: ' ) ),
-            ListTile( title: Text( 'Profesion 1: ' ) ),
-            ListTile( title: Text( 'Profesion 1: ' ) ),
+            // ListTile( title: Text( 'Profesion 1: ' ) ),
+            // ListTile( title: Text( 'Profesion 1: ' ) ),
+            // ListTile( title: Text( 'Profesion 1: ' ) ),
 
           ],
         ),

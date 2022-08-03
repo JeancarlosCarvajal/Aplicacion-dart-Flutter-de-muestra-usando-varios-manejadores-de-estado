@@ -2,13 +2,13 @@
 
 
 
-class Usuario {
+class User {
 
   String nombre;
   int edad;
   List<String>? profesiones;
 
-  Usuario({
+  User({
     required this.nombre,
     required this.edad,
     this.profesiones

@@ -7,11 +7,10 @@ part of 'user_bloc.dart';
 abstract class UserEvent {}
 
 
-class ActiveUser extends UserEvent {
-  final Usuario user;
+class ActivateUserEvent extends UserEvent {
+  final User user;
 
   // son {} es posicional
-  ActiveUser(this.user);
-
+  ActivateUserEvent(this.user);
 
 }
