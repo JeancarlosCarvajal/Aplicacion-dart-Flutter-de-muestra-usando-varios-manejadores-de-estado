@@ -25,5 +25,22 @@ class UsuarioCubit extends Cubit<UsuarioState> {
     } 
   }
 
+  // agregar profesion
+  // verificar si estoy en el estado donde cuento con la informacion del Usuario
+  void agregarProfesion(String profesion) { 
+    if(state is UsuarioActivo){
+      // ignore: unused_local_variable
+      final List<String>? profesiones = (state as UsuarioActivo).usuario.profesiones;
+      profesiones?.add('Profesion: ${profesiones.length}');
+      final newUser = (state as UsuarioActivo).usuario.copyWith(profesiones: profesiones);
+      emit(UsuarioActivo(newUser));
+    } 
+  }
+
+  // borrar usuario, volver la aplicacion a su estado inicial
+  void borrarUsuario() {
+    emit(UsuarioInitial());
+  }
+
 }
  

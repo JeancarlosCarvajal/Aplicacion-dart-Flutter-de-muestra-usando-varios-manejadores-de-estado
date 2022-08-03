@@ -46,7 +46,7 @@ class Pagina2Page extends StatelessWidget {
             ),MaterialButton(
               color: Colors.blue,
               onPressed: (){
-
+                usuarioCubit.agregarProfesion('Equis Profesion');
               },
               child: const Text( 'Anadir Profesion', style: TextStyle(color: Colors.white) )
             ),

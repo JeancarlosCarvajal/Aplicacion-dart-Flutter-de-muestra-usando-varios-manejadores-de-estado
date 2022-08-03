@@ -13,6 +13,12 @@ class Pagina1Page extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Center(child: Text( 'Pagina 1' )),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.cleaning_services),
+            onPressed: () => context.read<UsuarioCubit>().borrarUsuario(), 
+          )
+        ],
       ),
       body: BodyScaffold(),
       floatingActionButton: FloatingActionButton(
@@ -95,8 +101,13 @@ class InformacionUsuario extends StatelessWidget {
             const Text( 'Profesiones', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold) ),
             const Divider(),
 
+            // esta es una forma
+            // if(usuario.profesiones != null) 
+            //   ...usuario.profesiones!.map((profesion) => ListTile( title: Text( 'Profesion: $profesion' ) )).toList(),
+
             if(usuario.profesiones != null)
             ListView.builder(
+              scrollDirection: Axis.vertical,
               shrinkWrap: true,
               itemCount: usuario.profesiones!.length,
               itemBuilder: (_, int index) { 
