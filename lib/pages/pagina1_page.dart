@@ -13,6 +13,14 @@ class Pagina1Page extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Center(child: Text( 'Pagina 1' )),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.delete_forever_outlined), 
+            onPressed: (){
+              BlocProvider.of<UserBloc>(context, listen: false).add(DeleUserEvent());
+            },
+          ),
+        ],
       ),
       // cada vez que hay un cambio en el state este widget se va reconstruir con la informacion
       body: BlocBuilder<UserBloc, UserState>(

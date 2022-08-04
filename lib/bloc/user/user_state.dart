@@ -5,7 +5,6 @@ part of 'user_bloc.dart';
 
 @immutable
 abstract class UserState {
-  
   final bool existUser;
   final User? user;
 
@@ -13,7 +12,6 @@ abstract class UserState {
     this.existUser = false, 
     this.user
   });
-
 }
 
 // estado inicial en null y false

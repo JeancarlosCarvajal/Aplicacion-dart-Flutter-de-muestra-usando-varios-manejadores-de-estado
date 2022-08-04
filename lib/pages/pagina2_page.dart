@@ -9,7 +9,10 @@ class Pagina2Page extends StatelessWidget {
   const Pagina2Page({Key? key}) : super(key: key);
   
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context) { 
+    // hacemos referencia al Bloc
+    final userBloc =BlocProvider.of<UserBloc>(context, listen: false);
+
     return  Scaffold(
       appBar: AppBar(
         title: const Text( 'Pagina 2' ),
@@ -28,8 +31,7 @@ class Pagina2Page extends StatelessWidget {
                   profesiones: ['Full Stack Developer', 'Beisbolista']
                 );
 
-                BlocProvider.of<UserBloc>(context, listen: false)
-                  .add(ActivateUserEvent(newUser));
+                userBloc.add(ActivateUserEvent(newUser));
 
               },
               child: const Text( 'Establecer Usuario', style: TextStyle(color: Colors.white) )
@@ -37,13 +39,13 @@ class Pagina2Page extends StatelessWidget {
             MaterialButton(
               color: Colors.blue,
               onPressed: (){
-                
+                userBloc.add(ChangeUserAgeEvent(25));
               },
               child: const Text( 'Cambiar Edad', style: TextStyle(color: Colors.white) )
             ),MaterialButton(
               color: Colors.blue,
               onPressed: (){
-
+                userBloc.add(ChangeProfesionEvent('Astronauta'));
               },
               child: const Text( 'Anadir Profesion', style: TextStyle(color: Colors.white) )
             ),
